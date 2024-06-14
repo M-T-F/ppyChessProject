@@ -17,3 +17,14 @@ class Field:
 
     def get_rect(self):
         return self.rect
+
+    white_color = (255, 253, 208)
+
+    black_color = (150, 75, 0)
+
+    @classmethod
+    def get_color(cls, token):
+        if token:
+            return cls.white_color
+        else:
+            return cls.black_color
