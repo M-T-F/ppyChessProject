@@ -15,7 +15,7 @@ class Board:
     def run_game(self):
         pg.init()
         screen_white = pg.display.set_mode((600, 600))
-        screen_white.fill((170, 170, 170))
+        screen_white.fill((150, 150, 150))
         pg.display.set_caption("Chess")
         ##pg.draw.rect(screen_white, (10, 10, 10), Field(100, 100))
         while True:
@@ -23,11 +23,16 @@ class Board:
             for x in range(0, 8):
                 color = color == False
                 for y in range(0, 8):
-                    pg.draw.rect(screen_white, Field.get_color(color), self.board.loc[chr(x+ord("a")), y])
+                    pg.draw.rect(screen_white, self.board.loc[chr(x+ord("a")), y].get_color(color), self.board.loc[chr(x+ord("a")), y].get_rect())
                     color = color==False
                 #print(field)
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     sys.exit()
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    for x in range(0, 8):
+                        for y in range(0, 8):
+                            if self.board.loc[chr(x+ord("a")), y].get_rect().collidepoint(pg.mouse.get_pos()):
+                                self.board.loc[chr(x + ord("a")), y].set_selection(True)
             pg.display.flip()
