@@ -1,4 +1,4 @@
-from Board import Board
+from Game import Game
 
-board = Board()
-board.run_game()
+game = Game()
+game.run_game()
