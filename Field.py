@@ -6,6 +6,7 @@ class Field:
         self.rect = pg.Rect(x, y, width, height)
         self.piece = None
         self.selection = False
+        #print(self.rect.x, self.rect.y, self.rect.centery)
 
     def has_piece(self):
         return self.piece is not None
@@ -26,9 +27,9 @@ class Field:
 
     black_color = (150, 75, 0)
 
-    white_selected_color = (100, 200, 50)
+    white_selected_color = (205, 203, 208-50)
 
-    black_selected_color = (200, 50, 100)
+    black_selected_color = (100, 25, 0)
 
     def get_color(self, token):
         if self.selection:
@@ -41,3 +42,7 @@ class Field:
                 return self.white_color
             else:
                 return self.black_color
+
+    def blit(self, screen):
+        screen.blit(self.piece.get_icon(), self.rect)
+
