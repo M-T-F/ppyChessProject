@@ -58,7 +58,7 @@ class Pawn:
                     board[selected[0] - 1, selected[1]].set_move_selection()
         for see in self.can_see(selected[0], selected[1]):
             if 0 <= see[1] <= 7:
-                if board[see[0], see[1]].has_piece():
+                if board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color:
                     board[see[0], see[1]].set_take_selection()
 
     def get_color(self):
