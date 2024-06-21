@@ -35,23 +35,23 @@ class Rook:
         smove = True
         wmove = True
         for t in range(1,8):
-            if nmove and selected[0]+t <=7 and not board[selected[0]+t, selected[1]].has_piece():
+            if smove and selected[0]+t <= 7 and not board[selected[0]+t, selected[1]].has_piece():
                 board[selected[0] + t, selected[1]].set_move_selection()
-            elif (nmove and selected[0]+t <=7 and board[selected[0]+t, selected[1]].has_piece()
+            elif (smove and selected[0]+t <= 7 and board[selected[0]+t, selected[1]].has_piece()
                   and board[selected[0]+t, selected[1]].get_piece().get_color() != self.color):
                 board[selected[0] + t, selected[1]].set_take_selection()
-                nmove = False
+                smove = False
             else:
-                nmove = False
+                smove = False
 
-            if smove and selected[0]-t >= 0 and not board[selected[0]-t, selected[1]].has_piece():
+            if nmove and selected[0]-t >= 0 and not board[selected[0]-t, selected[1]].has_piece():
                 board[selected[0] - t, selected[1]].set_move_selection()
-            elif (smove and selected[0]-t >= 0 and board[selected[0]-t, selected[1]].has_piece()
+            elif (nmove and selected[0]-t >= 0 and board[selected[0]-t, selected[1]].has_piece()
                   and board[selected[0]-t, selected[1]].get_piece().get_color() != self.color):
                 board[selected[0] - t, selected[1]].set_take_selection()
-                smove = False
+                nmove = False
             else:
-                smove = False
+                nmove = False
 
             if emove and selected[1] + t <= 7 and not board[selected[0], selected[1] + t].has_piece():
                 board[selected[0], selected[1] + t].set_move_selection()
