@@ -1,3 +1,5 @@
+import turtle
+
 import pygame as pg
 import sys
 
@@ -18,6 +20,7 @@ class Game:
         screen.fill((150, 150, 150))
         pg.display.set_caption("Chess")
         ##pg.draw.rect(screen_white, (10, 10, 10), Field(100, 100))
+        player_turn = "white"
         while True:
             color = False
             for x in range(0, 8):
@@ -39,23 +42,18 @@ class Game:
                 if event.type == pg.QUIT:
                     sys.exit()
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    for y in range(0, 8):
-                        for x in range(0, 8):
+                    for x in range(0, 8):
+                        for y in range(0, 8):
                             if self.board.board[x, y].get_rect().collidepoint(pg.mouse.get_pos()):
-                                if (x, y) in self.cmove and not self.board.board[x, y].has_piece():
+                                if self.board.can_move(x, y):
                                     self.board.move(self.selected, x, y)
+                                    player_turn = 'black' if player_turn == 'white' else 'white'
                                 elif self.board.board[x, y].has_piece():
-                                    for xi in range(0, 8):
-                                        for yi in range(0, 8):
-                                            self.board.board[xi, yi].set_selection(False)
-                                    self.board.board[x, y].set_selection(True)
-                                    self.selected = (x, y)
-                                    self.cmove = self.board.board[x, y].get_piece().can_move(x,y)
-                                    self.csee = self.board.board[x, y].get_piece().can_see(x,y)
-                                    for xi in range(0, 8):
-                                        for yi in range(0, 8):
-                                            if (xi, yi) in self.cmove and not self.board.board[xi, yi].has_piece():
-                                                self.board.board[xi, yi].set_selection(True)
+                                    if self.board.board[x, y].get_piece().get_color() == player_turn:
+                                        self.board.unselect()
+                                        self.board.board[x, y].set_selection(True)
+                                        self.selected = (x, y)
+                                        self.board.select_move(self.selected)
 
 
             pg.display.flip()

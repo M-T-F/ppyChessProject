@@ -6,6 +6,8 @@ class Field:
         self.rect = pg.Rect(x, y, width, height)
         self.piece = None
         self.selection = False
+        self.move_selection = False
+        self.take_selection = False
         #print(self.rect.x, self.rect.y, self.rect.centery)
 
     def has_piece(self):
@@ -22,6 +24,27 @@ class Field:
 
     def set_selection(self, selection):
         self.selection = selection
+        if not self.selection:
+            self.move_selection = False
+            self.take_selection = False
+
+    def is_selected(self):
+        return self.selection
+
+    def set_move_selection(self):
+        self.move_selection = True
+
+    def get_move_selection(self):
+        return self.move_selection
+
+    def set_take_selection(self):
+        self.take_selection = True
+
+    def get_take_selection(self):
+        return self.take_selection
+
+    def cen_move(self):
+        return self.move_selection or self.take_selection
 
     white_color = (255, 253, 208)
 
@@ -32,7 +55,7 @@ class Field:
     black_selected_color = (100, 25, 0)
 
     def get_color(self, token):
-        if self.selection:
+        if self.selection or self.take_selection or self.move_selection:
             if token:
                 return self.white_selected_color
             else:
@@ -45,4 +68,6 @@ class Field:
 
     def blit(self, screen):
         screen.blit(self.piece.get_icon(), self.rect)
+
+
 
