@@ -1,5 +1,5 @@
 import numpy as np
-from Pieces import Pawn, Rook, Knight, Bishop, Queen
+from Pieces import Pawn, Rook, Knight, Bishop, Queen, King
 from Field import Field
 
 
@@ -22,6 +22,9 @@ class Board:
             elif y == 3:
                 self.board[0, y].set_piece(Queen.Queen('black'))
                 self.board[7, y].set_piece(Queen.Queen('white'))
+            elif y == 4:
+                self.board[0, y].set_piece(King.King('black'))
+                self.board[7, y].set_piece(King.King('white'))
 
 
     @property

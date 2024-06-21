@@ -1,22 +1,22 @@
 import pygame as pg
 
 
-class Knight:
+class King:
     def __init__(self, color):
         super().__init__()
         self.color = color
         if self.color == 'white':
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_knight.png'), 0.35)
+            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_king.png'), 0.35)
         else:
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_knight.png'), 0.4)
+            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
         self.not_moved = True
 
     @classmethod
     def can_move(cls, x, y):
-        return [(x+2, y+1), (x+2, y-1),
-                (x-2, y+1), (x-2, y-1),
-                (x+1, y+2), (x+1, y-2),
-                (x-1, y+2), (x-1, y-2)]
+        return [(x+1, y+1), (x+1, y-1),
+                (x-1, y+1), (x-1, y-1),
+                (x+1, y), (x, y-1),
+                (x, y+1), (x-1, y)]
 
     def can_see(self, x, y):
         return self.can_move(x, y)
