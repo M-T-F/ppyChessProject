@@ -11,11 +11,18 @@ class Rook:
             self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_rook.png'), 0.4)
         self.not_moved = True
 
-    def can_move(self, x, y):
-        return [[(i, y) for i in range(0, x)],
-                [(i, y) for i in range(x+1, 8)],
-                [(x, i) for i in range(0, y)],
-                [(x, i) for i in range(y+1, 8)]]
+    @classmethod
+    def can_move(cls, x, y):
+        tmp = []
+        for i in range(0, x):
+            tmp.append((i, y))
+        for i in range(x+1, 8):
+            tmp.append((i, y))
+        for i in range(0, y):
+            tmp.append((x, i))
+        for i in range(y+1, 8):
+            tmp.append((x, i))
+        return tmp
 
     def can_see(self, x, y):
         return self.can_move(x, y)

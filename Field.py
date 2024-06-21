@@ -50,9 +50,9 @@ class Field:
 
     black_color = (150, 75, 0)
 
-    white_selected_color = (205, 203, 208-50)
+    white_selected_color = (155, 153, 208-50)
 
-    black_selected_color = (100, 25, 0)
+    black_selected_color = (100, 55, 55)
 
     def get_color(self, token):
         if self.selection or self.take_selection or self.move_selection:
