@@ -37,3 +37,6 @@ class Knight:
                     board[tab[0]][tab[1]].set_take_selection()
                 elif not board[tab[0]][tab[1]].has_piece():
                     board[tab[0]][tab[1]].set_move_selection()
+
+    def is_king(self):
+        return False

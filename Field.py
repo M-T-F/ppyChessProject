@@ -8,6 +8,7 @@ class Field:
         self.selection = False
         self.move_selection = False
         self.take_selection = False
+        self.castle_selection = False
         #print(self.rect.x, self.rect.y, self.rect.centery)
 
     def has_piece(self):
@@ -27,6 +28,7 @@ class Field:
         if not self.selection:
             self.move_selection = False
             self.take_selection = False
+            self.castle_selection = False
 
     def is_selected(self):
         return self.selection
@@ -43,8 +45,11 @@ class Field:
     def get_take_selection(self):
         return self.take_selection
 
+    def set_castle_selection(self):
+        self.castle_selection = True
+
     def cen_move(self):
-        return self.move_selection or self.take_selection
+        return self.move_selection or self.take_selection or self.castle_selection
 
     white_color = (255, 253, 208)
 
@@ -55,7 +60,7 @@ class Field:
     black_selected_color = (100, 55, 55)
 
     def get_color(self, token):
-        if self.selection or self.take_selection or self.move_selection:
+        if self.selection or self.take_selection or self.move_selection or self.castle_selection:
             if token:
                 return self.white_selected_color
             else:

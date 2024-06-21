@@ -46,7 +46,10 @@ class Game:
                         for y in range(0, 8):
                             if self.board.board[x, y].get_rect().collidepoint(pg.mouse.get_pos()):
                                 if self.board.can_move(x, y):
-                                    self.board.move(self.selected, x, y)
+                                    if self.board.board[self.selected[0], self.selected[1]].get_piece().is_king():
+                                        self.board.castle(self.selected, x, y)
+                                    else:
+                                        self.board.move(self.selected, x, y)
                                     player_turn = 'black' if player_turn == 'white' else 'white'
                                 elif self.board.board[x, y].has_piece():
                                     if self.board.board[x, y].get_piece().get_color() == player_turn:

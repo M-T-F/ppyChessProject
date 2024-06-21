@@ -37,3 +37,15 @@ class King:
                     board[tab[0]][tab[1]].set_take_selection()
                 elif not board[tab[0]][tab[1]].has_piece():
                     board[tab[0]][tab[1]].set_move_selection()
+        if self.not_moved:
+            if board[selected[0], 7].get_piece().get_not_moved():
+                if not board[selected[0]][6].has_piece() and not board[selected[0]][5].has_piece():
+                    board[selected[0]][6].set_castle_selection()
+            if board[selected[0], 0].get_piece().get_not_moved():
+                if (not board[selected[0]][1].has_piece()
+                        and not board[selected[0]][2].has_piece()
+                        and not board[selected[0]][3].has_piece()):
+                    board[selected[0]][2].set_castle_selection()
+
+    def is_king(self):
+        return True

@@ -88,3 +88,6 @@ class Bishop:
                 nwmove = False
             else:
                 nwmove = False
+
+    def is_king(self):
+        return False

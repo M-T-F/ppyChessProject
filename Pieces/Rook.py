@@ -33,6 +33,9 @@ class Rook:
     def set_moved(self):
         self.not_moved = False
 
+    def get_not_moved(self):
+        return self.not_moved
+
     def get_color(self):
         return self.color
 
@@ -77,3 +80,6 @@ class Rook:
                 wmove = False
             else:
                 wmove = False
+
+    def is_king(self):
+        return False

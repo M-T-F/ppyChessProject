@@ -37,6 +37,20 @@ class Board:
         self.board[s[0], s[1]].set_piece(None)
         self.unselect()
 
+    def castle(self, s, tx, ty):
+        self.board[s[0], s[1]].get_piece().set_moved()
+        self.board[tx, ty].set_piece(self.board[s[0], s[1]].get_piece())
+        self.board[s[0], s[1]].set_piece(None)
+        if ty == 6:
+            self.board[tx, 5].set_piece(self.board[tx, 7].get_piece())
+            self.board[tx, 7].set_piece(None)
+            self.board[tx, 5].get_piece().set_moved()
+        elif ty == 2:
+            self.board[tx, 3].set_piece(self.board[tx, 0].get_piece())
+            self.board[tx, 0].set_piece(None)
+            self.board[tx, 3].get_piece().set_moved()
+        self.unselect()
+
     def select_move(self, selected):
         self.board[selected[0], selected[1]].get_piece().select_move(self.board, selected)
         #can_see = self.board[selected].can_see()

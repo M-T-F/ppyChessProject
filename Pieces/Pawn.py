@@ -63,3 +63,6 @@ class Pawn:
 
     def get_color(self):
         return self.color
+
+    def is_king(self):
+        return False
