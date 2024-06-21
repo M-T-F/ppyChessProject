@@ -18,10 +18,7 @@ class Rook:
                 [(x, i) for i in range(y+1, 8)]]
 
     def can_see(self, x, y):
-        return [[(i, y) for i in range(0, x)],
-                [(i, y) for i in range(x + 1, 8)],
-                [(x, i) for i in range(0, y)],
-                [(x, i) for i in range(y + 1, 8)]]
+        return self.can_move(x, y)
 
     def get_icon(self):
         return self.icon
