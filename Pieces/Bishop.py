@@ -27,8 +27,45 @@ class Bishop:
                     tmp.append((x - i, y - i))
         return tmp
 
-    def can_see(self, x, y):
-        return self.can_move(x, y)
+    def can_see(self, board, selected):
+        tmp = []
+        nemove = True
+        semove = True
+        swmove = True
+        nwmove = True
+        for t in range(1, 8):
+            if (semove and 0 <= selected[0] + t <= 7 and 0 <= selected[1] + t <= 7
+                  and board[selected[0] + t, selected[1] + t].has_piece()
+                  and board[selected[0] + t, selected[1] + t].get_piece().get_color() != self.color):
+                tmp.append((selected[0] + t, selected[1] + t))
+                semove = False
+            else:
+                semove = False
+
+            if (swmove and 0 <= selected[0] + t <= 7 and 0 <= selected[1] - t <= 7
+                  and board[selected[0] + t, selected[1] - t].has_piece()
+                  and board[selected[0] + t, selected[1] - t].get_piece().get_color() != self.color):
+                tmp.append((selected[0] + t, selected[1] - t))
+                swmove = False
+            else:
+                swmove = False
+
+            if (nemove and 0 <= selected[0] - t <= 7 and 0 <= selected[1] + t <= 7
+                  and board[selected[0] - t, selected[1] + t].has_piece()
+                  and board[selected[0] - t, selected[1] + t].get_piece().get_color() != self.color):
+                tmp.append((selected[0] - t, selected[1] + t))
+                nemove = False
+            else:
+                nemove = False
+
+            if (nwmove and 0 <= selected[0] - t <= 7 and 0 <= selected[1] - t <= 7
+                  and board[selected[0] - t, selected[1] - t].has_piece()
+                  and board[selected[0] - t, selected[1] - t].get_piece().get_color() != self.color):
+                tmp.append((selected[0] - t, selected[1] - t))
+                nwmove = False
+            else:
+                nwmove = False
+        return tmp
 
     def get_icon(self):
         return self.icon

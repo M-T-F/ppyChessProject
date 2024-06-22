@@ -18,8 +18,13 @@ class Knight:
                 (x+1, y+2), (x+1, y-2),
                 (x-1, y+2), (x-1, y-2)]
 
-    def can_see(self, x, y):
-        return self.can_move(x, y)
+    def can_see(self, board, selected):
+        tmp = []
+        for move in self.can_move(selected[0], selected[1]):
+            if (0 <= move[0] <= 7 and 0 <= move[1] <= 7 and board[move[0]][move[1]].has_piece() and
+                    board[move[0]][move[1]].get_piece().get_color() != self.color):
+                tmp.append(move)
+        return tmp
 
     def get_icon(self):
         return self.icon
