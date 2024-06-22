@@ -2,7 +2,7 @@ import turtle
 
 import pygame as pg
 import sys
-
+from Pieces import King
 from Board import Board
 
 
@@ -46,7 +46,9 @@ class Game:
                         for y in range(0, 8):
                             if self.board.board[x, y].get_rect().collidepoint(pg.mouse.get_pos()):
                                 if self.board.can_move(x, y):
-                                    if self.board.board[self.selected[0], self.selected[1]].get_piece().is_king():
+                                    if (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
+                                            is King.King
+                                            and self.board.board[self.selected[0], self.selected[1]].get_piece().get_not_moved()):
                                         self.board.castle(self.selected, x, y)
                                     else:
                                         self.board.move(self.selected, x, y)

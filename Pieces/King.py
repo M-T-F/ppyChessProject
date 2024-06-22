@@ -27,6 +27,9 @@ class King:
     def set_moved(self):
         self.not_moved = False
 
+    def get_not_moved(self):
+        return self.not_moved
+
     def get_color(self):
         return self.color
 
@@ -47,5 +50,3 @@ class King:
                         and not board[selected[0]][3].has_piece()):
                     board[selected[0]][2].set_castle_selection()
 
-    def is_king(self):
-        return True

@@ -81,5 +81,3 @@ class Rook:
             else:
                 wmove = False
 
-    def is_king(self):
-        return False
