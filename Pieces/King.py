@@ -2,7 +2,7 @@ import pygame as pg
 
 
 class King:
-    def __init__(self, color):
+    def __init__(self, color, x, y):
         super().__init__()
         self.color = color
         if self.color == 'white':
@@ -10,13 +10,14 @@ class King:
         else:
             self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
         self.not_moved = True
+        self.x = x
+        self.y = y
 
-    @classmethod
-    def can_move(cls, x, y):
-        return [(x+1, y+1), (x+1, y-1),
-                (x-1, y+1), (x-1, y-1),
-                (x+1, y), (x, y-1),
-                (x, y+1), (x-1, y)]
+    def can_move(self):
+        return [(self.x+1, self.y+1), (self.x+1, self.y-1),
+                (self.x-1, self.y+1), (self.x-1, self.y-1),
+                (self.x+1, self.y), (self.x, self.y-1),
+                (self.x, self.y+1), (self.x-1, self.y)]
 
     def can_see(self, x, y):
         return self.can_move(x, y)
@@ -33,20 +34,24 @@ class King:
     def get_color(self):
         return self.color
 
-    def select_move(self, board, selected):
-        for tab in self.can_move(selected[0], selected[1]):
+    def select_move(self, board):
+        for tab in self.can_move():
             if 0 <= tab[0] <= 7 and 0 <= tab[1] <= 7:
                 if board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color:
                     board[tab[0]][tab[1]].set_take_selection()
                 elif not board[tab[0]][tab[1]].has_piece():
                     board[tab[0]][tab[1]].set_move_selection()
         if self.not_moved:
-            if board[selected[0], 7].get_piece().get_not_moved():
-                if not board[selected[0]][6].has_piece() and not board[selected[0]][5].has_piece():
-                    board[selected[0]][6].set_castle_selection()
-            if board[selected[0], 0].get_piece().get_not_moved():
-                if (not board[selected[0]][1].has_piece()
-                        and not board[selected[0]][2].has_piece()
-                        and not board[selected[0]][3].has_piece()):
-                    board[selected[0]][2].set_castle_selection()
+            if board[self.x, 7].get_piece().get_not_moved():
+                if not board[self.x][6].has_piece() and not board[self.x][5].has_piece():
+                    board[self.x][6].set_castle_selection()
+            if board[self.x, 0].get_piece().get_not_moved():
+                if (not board[self.x][1].has_piece()
+                        and not board[self.x][2].has_piece()
+                        and not board[self.x][3].has_piece()):
+                    board[self.x][2].set_castle_selection()
+
+    def move(self, x, y):
+        self.x = x
+        self.y = y
 

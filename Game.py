@@ -48,7 +48,8 @@ class Game:
                                 if self.board.can_move(x, y):
                                     if (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
                                             is King.King
-                                            and self.board.board[self.selected[0], self.selected[1]].get_piece().get_not_moved()):
+                                            and self.board.board[
+                                                self.selected[0], self.selected[1]].get_piece().get_not_moved()):
                                         self.board.castle(self.selected, x, y)
                                     else:
                                         self.board.move(self.selected, x, y)
@@ -59,6 +60,5 @@ class Game:
                                         self.board.board[x, y].set_selection(True)
                                         self.selected = (x, y)
                                         self.board.select_move(self.selected)
-
 
             pg.display.flip()
