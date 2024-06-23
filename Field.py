@@ -71,8 +71,8 @@ class Field:
             else:
                 return self.black_color
 
-    def blit(self, screen):
-        screen.blit(self.piece.get_icon(), self.rect)
+    #def blit(self, screen):
+     #   screen.blit(self.piece.get_icon(), self.rect)
 
 
 

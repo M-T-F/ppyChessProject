@@ -1,17 +1,10 @@
 import pygame as pg
+from Pieces import Piece
 
 
-class King:
-    def __init__(self, color, x, y):
-        super().__init__()
-        self.color = color
-        if self.color == 'white':
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_king.png'), 0.35)
-        else:
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
-        self.not_moved = True
-        self.x = x
-        self.y = y
+class King(Piece.Piece):
+    icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_king.png'), 0.35)
+    icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
 
     def can_move(self):
         return [(self.x+1, self.y+1), (self.x+1, self.y-1),
@@ -21,18 +14,6 @@ class King:
 
     def can_see(self, x, y):
         return self.can_move(x, y)
-
-    def get_icon(self):
-        return self.icon
-
-    def set_moved(self):
-        self.not_moved = False
-
-    def get_not_moved(self):
-        return self.not_moved
-
-    def get_color(self):
-        return self.color
 
     def select_move(self, board):
         for tab in self.can_move():
@@ -50,8 +31,4 @@ class King:
                         and not board[self.x][2].has_piece()
                         and not board[self.x][3].has_piece()):
                     board[self.x][2].set_castle_selection()
-
-    def move(self, x, y):
-        self.x = x
-        self.y = y
 

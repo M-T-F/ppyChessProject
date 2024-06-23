@@ -1,17 +1,11 @@
 import pygame as pg
+from Pieces import Piece
 
 
-class Pawn:
-    def __init__(self, color, x, y):
-        super().__init__()
-        self.color = color
-        if self.color == 'white':
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_pawn.png'), 0.35)
-        else:
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_pawn.png'), 0.4)
-        self.not_moved = True
-        self.x = x
-        self.y = y
+class Pawn(Piece.Piece):
+    icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_pawn.png'), 0.35)
+    icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_pawn.png'), 0.4)
+
 
     def can_move(self):
         if self.not_moved:
@@ -30,12 +24,6 @@ class Pawn:
             return [(self.x+1, self.y+1), (self.x+1, self.y-1)]
         else:
             return [(self.x-1, self.y+1), (self.x-1, self.y-1)]
-
-    def get_icon(self):
-        return self.icon
-
-    def set_moved(self):
-        self.not_moved = False
 
     def select_move(self, board):
         if self.not_moved:
@@ -62,11 +50,4 @@ class Pawn:
             if 0 <= see[1] <= 7:
                 if board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color:
                     board[see[0], see[1]].set_take_selection()
-
-    def get_color(self):
-        return self.color
-
-    def move(self, x, y):
-        self.x = x
-        self.y = y
 

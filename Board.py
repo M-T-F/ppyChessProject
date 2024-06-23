@@ -32,12 +32,18 @@ class Board:
         return self._board
 
     def move(self, s, tx, ty):
+        #if type(self.board[s[0], s[1]].get_piece()) is Pawn.Pawn and tx == 0 or tx == 7:
         self.board[s[0], s[1]].get_piece().set_moved()
         self.board[s[0], s[1]].get_piece().move(tx, ty)
         self.board[tx, ty].set_piece(self.board[s[0], s[1]].get_piece())
         self.board[s[0], s[1]].set_piece(None)
-
         self.unselect()
+
+    def promote(self, s, piece):
+        self.board[piece.get_x_coordinate(), piece.get_y_coordinate()].set_piece(piece)
+        self.board[s[0], s[1]].set_piece(None)
+        self.unselect()
+
 
     def castle(self, s, tx, ty):
         self.board[s[0], s[1]].get_piece().set_moved()

@@ -1,17 +1,11 @@
 import pygame as pg
+from Pieces import Piece
 
 
-class Rook:
-    def __init__(self, color, x, y):
-        super().__init__()
-        self.color = color
-        if self.color == 'white':
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_rook.png'), 0.35)
-        else:
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_rook.png'), 0.4)
-        self.not_moved = True
-        self.x = x
-        self.y = y
+class Rook(Piece.Piece):
+    icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_rook.png'), 0.35)
+    icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_rook.png'), 0.4)
+
 
     @classmethod
     def cls_can_move(cls, x, y):
@@ -72,17 +66,6 @@ class Rook:
                 wmove = False
         return tmp
 
-    def get_icon(self):
-        return self.icon
-
-    def set_moved(self):
-        self.not_moved = False
-
-    def get_not_moved(self):
-        return self.not_moved
-
-    def get_color(self):
-        return self.color
 
     def select_move(self, board):
         nmove = True
@@ -126,6 +109,3 @@ class Rook:
             else:
                 wmove = False
 
-    def move(self, x, y):
-        self.x = x
-        self.y = y

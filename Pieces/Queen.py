@@ -1,18 +1,11 @@
 import pygame as pg
-from Pieces import Rook, Bishop
+from Pieces import Rook, Bishop,Piece
 
 
-class Queen:
-    def __init__(self, color, x, y):
-        super().__init__()
-        self.color = color
-        if self.color == 'white':
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_queen.png'), 0.35)
-        else:
-            self.icon = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_queen.png'), 0.4)
-        self.not_moved = True
-        self.x = x
-        self.y = y
+class Queen(Piece.Piece):
+    icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_queen.png'), 0.35)
+    icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_queen.png'), 0.4)
+
 
     def can_move(self):
         tmp = Rook.Rook.cls_can_move(self.x, self.y)
@@ -89,15 +82,6 @@ class Queen:
                 else:
                     nwmove = False
         return tmp
-
-    def get_icon(self):
-        return self.icon
-
-    def set_moved(self):
-        self.not_moved = False
-
-    def get_color(self):
-        return self.color
 
     def select_move(self, board):
         nemove = True
@@ -189,6 +173,3 @@ class Queen:
             else:
                 wmove = False
 
-    def move(self, x, y):
-        self.x = x
-        self.y = y
