@@ -14,12 +14,12 @@ class Knight(Piece.Piece):
                 (self.x-1, self.y+2), (self.x-1, self.y-2)]
 
     def can_see(self, board=None):
-        tmp = []
-        for move in self.can_move():
-            if (0 <= move[0] <= 7 and 0 <= move[1] <= 7 and board[move[0]][move[1]].has_piece() and
-                    board[move[0]][move[1]].get_piece().get_color() != self.color):
-                tmp.append(move)
-        return tmp
+        #tmp = []
+        #for move in self.can_move():
+        #    if (0 <= move[0] <= 7 and 0 <= move[1] <= 7 and board[move[0]][move[1]].has_piece() and
+        #            board[move[0]][move[1]].get_piece().get_color() != self.color):
+        #        tmp.append(move)
+        return self.can_move()
 
     def select_move(self, board):
         for tab in self.can_move():
