@@ -1,4 +1,6 @@
 import pygame as pg
+
+import Pieces.King
 from Pieces import Piece
 
 
@@ -21,49 +23,43 @@ class Rook(Piece.Piece):
         return tmp
 
     def can_move(self):
-        tmp = []
-        for i in range(0, self.x):
-            tmp.append((i, self.y))
-        for i in range(self.x+1, 8):
-            tmp.append((i, self.y))
-        for i in range(0, self.y):
-            tmp.append((self.x, i))
-        for i in range(self.y+1, 8):
-            tmp.append((self.x, i))
-        return tmp
+        return self.cls_can_move(self.x, self.y)
 
-    def can_see(self, board):
+    def can_see(self, board=None):
         tmp = []
         nmove = True
         emove = True
         smove = True
         wmove = True
         for t in range(1, 8):
-            if (smove and self.x + t <= 7 and board[self.x + t, self.y].has_piece() and
+            if smove and self.x + t <= 7 and not board[self.x + t, self.y].has_piece():
+                tmp.append((self.x + t, self.y))
+            elif (smove and self.x + t <= 7 and board[self.x + t, self.y].has_piece() and
                     board[self.x + t, self.y].get_piece().get_color() != self.color):
                 tmp.append((self.x + t, self.y))
                 smove = False
 
-            if (nmove and self.x - t >= 0 and board[self.x - t, self.y].has_piece() and
+            if nmove and self.x - t >= 0 and not board[self.x - t, self.y].has_piece():
+                tmp.append((self.x - t, self.y))
+            elif (nmove and self.x - t >= 0 and board[self.x - t, self.y].has_piece() and
                     board[self.x - t, self.y].get_piece().get_color() != self.color):
                 tmp.append((self.x - t, self.y))
                 nmove = False
-            else:
-                nmove = False
 
-            if (emove and self.y + t <= 7 and board[self.x, self.y + t].has_piece() and
+            if emove and self.y + t <= 7 and not board[self.x, self.y + t].has_piece():
+                tmp.append((self.x, self.y + t))
+            elif (emove and self.y + t <= 7 and board[self.x, self.y + t].has_piece() and
                     board[self.x, self.y + t].get_piece().get_color() != self.color):
                 tmp.append((self.x, self.y + t))
                 emove = False
-            else:
-                emove = False
 
-            if (wmove and self.y - t >= 0 and board[self.x, self.y - t].has_piece() and
+            if wmove and self.y - t >= 0 and not board[self.x, self.y - t].has_piece():
+                tmp.append((self.x, self.y - t))
+            elif (wmove and self.y - t >= 0 and board[self.x, self.y - t].has_piece() and
                     board[self.x, self.y - t].get_piece().get_color() != self.color):
                 tmp.append((self.x, self.y - t))
                 wmove = False
-            else:
-                wmove = False
+
         return tmp
 
 
@@ -108,4 +104,53 @@ class Rook(Piece.Piece):
                 wmove = False
             else:
                 wmove = False
+
+    def would_see_king(self, board):
+        tmp = []
+        nmove = True
+        nsee = True
+        emove = True
+        esee = True
+        smove = True
+        ssee = True
+        wmove = True
+        wsee = True
+        for t in range(1, 8):
+            if (smove and self.x + t <= 7 and board[self.x + t, self.y].has_piece()
+                  and board[self.x + t, self.y].get_piece().get_color() != self.color):
+                smove = False
+            elif (ssee and self.x + t <= 7 and board[self.x + t, self.y].has_piece()
+                  and board[self.x + t, self.y].get_piece().get_color() != self.color
+                  and type(board[self.x + t, self.y].get_piece()) is Pieces.King.King):
+                tmp.append((self.x + t, self.y))
+                ssee = False
+
+            if (nmove and self.x - t >= 0 and board[self.x - t, self.y].has_piece()
+                  and board[self.x - t, self.y].get_piece().get_color() != self.color):
+                nmove = False
+            elif (nsee and self.x - t >= 0 and board[self.x - t, self.y].has_piece()
+                  and board[self.x - t, self.y].get_piece().get_color() != self.color
+                  and type(board[self.x - t, self.y].get_piece()) is Pieces.King.King):
+                tmp.append((self.x - t, self.y))
+                nsee = False
+
+            if (emove and self.y + t <= 7 and board[self.x, self.y + t].has_piece()
+                  and board[self.x, self.y + t].get_piece().get_color() != self.color):
+                emove = False
+            elif (esee and self.y + t <= 7 and board[self.x, self.y + t].has_piece()
+                  and board[self.x, self.y + t].get_piece().get_color() != self.color
+                  and type(board[self.x, self.y + t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x, self.y + t))
+                esee = False
+
+            if (wmove and self.y - t >= 0 and board[self.x, self.y - t].has_piece()
+                  and board[self.x, self.y - t].get_piece().get_color() != self.color):
+                wmove = False
+            elif (wsee and self.y - t >= 0 and board[self.x, self.y - t].has_piece()
+                  and board[self.x, self.y - t].get_piece().get_color() != self.color
+                  and type(board[self.x, self.y - t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x, self.y - t))
+                wsee = False
+
+        return tmp
 

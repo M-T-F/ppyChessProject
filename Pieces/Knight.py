@@ -13,7 +13,7 @@ class Knight(Piece.Piece):
                 (self.x+1, self.y+2), (self.x+1, self.y-2),
                 (self.x-1, self.y+2), (self.x-1, self.y-2)]
 
-    def can_see(self, board):
+    def can_see(self, board=None):
         tmp = []
         for move in self.can_move():
             if (0 <= move[0] <= 7 and 0 <= move[1] <= 7 and board[move[0]][move[1]].has_piece() and
@@ -28,4 +28,9 @@ class Knight(Piece.Piece):
                     board[tab[0]][tab[1]].set_take_selection()
                 elif not board[tab[0]][tab[1]].has_piece():
                     board[tab[0]][tab[1]].set_move_selection()
+
+    def would_see_king(self, board):
+        return self.can_see(board)
+
+
 

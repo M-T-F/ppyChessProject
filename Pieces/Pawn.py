@@ -19,7 +19,7 @@ class Pawn(Piece.Piece):
             else:
                 return [(self.x-1, self.y)]
 
-    def can_see(self):
+    def can_see(self, board=None):
         if self.color == 'black':
             return [(self.x+1, self.y+1), (self.x+1, self.y-1)]
         else:
@@ -50,4 +50,8 @@ class Pawn(Piece.Piece):
             if 0 <= see[1] <= 7:
                 if board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color:
                     board[see[0], see[1]].set_take_selection()
+
+    def would_see_king(self, board):
+        return self.can_see(board)
+
 

@@ -7,24 +7,56 @@ class Board:
     def __init__(self):
         self._board = np.array([[Field(x, y) for x in range(100, 500, 50)] for y in range(100, 500, 50)])
         self.selected = None
+        self.white_pieses = []
+        self.black_pieces = []
         for y in range(8):
-            self.board[1, y].set_piece(Pawn.Pawn('black', 1, y))
-            self.board[6, y].set_piece(Pawn.Pawn('white', 6, y))
+            black = Pawn.Pawn('black', 1, y)
+            self.board[1, y].set_piece(black)
+            self.black_pieces.append(black)
+
+            white = Pawn.Pawn('white', 6, y)
+            self.board[6, y].set_piece(white)
+            self.white_pieses.append(white)
             if y == 0 or y == 7:
-                self.board[0, y].set_piece(Rook.Rook('black', 0, y))
-                self.board[7, y].set_piece(Rook.Rook('white', 7, y))
+                black = Rook.Rook('black', 0, y)
+                self.board[0, y].set_piece(black)
+                self.black_pieces.append(black)
+
+                white = Rook.Rook('white', 7, y)
+                self.board[7, y].set_piece(white)
+                self.white_pieses.append(white)
             elif y == 1 or y == 6:
-                self.board[0, y].set_piece(Knight.Knight('black', 0, y))
-                self.board[7, y].set_piece(Knight.Knight('white', 7, y))
+                black = Knight.Knight('black', 0, y)
+                self.board[0, y].set_piece(black)
+                self.black_pieces.append(black)
+
+                white = Knight.Knight('white', 7, y)
+                self.board[7, y].set_piece(white)
+                self.white_pieses.append(white)
             elif y == 2 or y == 5:
-                self.board[0, y].set_piece(Bishop.Bishop('black', 0, y))
-                self.board[7, y].set_piece(Bishop.Bishop('white', 7, y))
+                black = Bishop.Bishop('black', 0, y)
+                self.board[0, y].set_piece(black)
+                self.black_pieces.append(black)
+
+                white = Bishop.Bishop('white', 7, y)
+                self.board[7, y].set_piece(white)
+                self.white_pieses.append(white)
             elif y == 3:
-                self.board[0, y].set_piece(Queen.Queen('black', 0, y))
-                self.board[7, y].set_piece(Queen.Queen('white', 7, y))
+                black = Queen.Queen('black', 0, y)
+                self.board[0, y].set_piece(black)
+                self.black_pieces.append(black)
+
+                white = Queen.Queen('white', 7, y)
+                self.board[7, y].set_piece(white)
+                self.white_pieses.append(white)
             elif y == 4:
-                self.board[0, y].set_piece(King.King('black', 0, y))
-                self.board[7, y].set_piece(King.King('white', 7, y))
+                black = King.King('black', 0, y, self.white_pieses)
+                self.board[0, y].set_piece(black)
+                self.black_pieces.append(black)
+
+                white = King.King('white', 7, y, self.black_pieces)
+                self.board[7, y].set_piece(white)
+                self.white_pieses.append(white)
 
 
     @property

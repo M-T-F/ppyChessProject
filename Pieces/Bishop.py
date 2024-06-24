@@ -1,4 +1,6 @@
 import pygame as pg
+
+import Pieces.King
 from Pieces import Piece
 
 
@@ -38,7 +40,7 @@ class Bishop(Piece.Piece):
                     tmp.append((self.x - i, self.y - i))
         return tmp
 
-    def can_see(self, board):
+    def can_see(self, board=None):
         tmp = []
         nemove = True
         semove = True
@@ -46,35 +48,39 @@ class Bishop(Piece.Piece):
         nwmove = True
         for t in range(1, 8):
             if (semove and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
+                    and not board[self.x + t, self.y + t].has_piece()):
+                tmp.append((self.x + t, self.y + t))
+            elif (semove and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
                   and board[self.x + t, self.y + t].has_piece()
                   and board[self.x + t, self.y + t].get_piece().get_color() != self.color):
                 tmp.append((self.x + t, self.y + t))
                 semove = False
-            else:
-                semove = False
 
             if (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
+                    and not board[self.x + t, self.y - t].has_piece()):
+                tmp.append((self.x + t, self.y - t))
+            elif (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
                   and board[self.x + t, self.y - t].has_piece()
                   and board[self.x + t, self.y - t].get_piece().get_color() != self.color):
                 tmp.append((self.x + t, self.y - t))
                 swmove = False
-            else:
-                swmove = False
 
             if (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
+                    and not board[self.x - t, self.y + t].has_piece()):
+                tmp.append((self.x - t, self.y + t))
+            elif (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
                   and board[self.x - t, self.y + t].has_piece()
                   and board[self.x - t, self.y + t].get_piece().get_color() != self.color):
                 tmp.append((self.x - t, self.y + t))
                 nemove = False
-            else:
-                nemove = False
 
             if (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
+                    and not board[self.x - t, self.y - t].has_piece()):
+                tmp.append((self.x - t, self.y - t))
+            elif (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
                   and board[self.x - t, self.y - t].has_piece()
                   and board[self.x - t, self.y - t].get_piece().get_color() != self.color):
                 tmp.append((self.x - t, self.y - t))
-                nwmove = False
-            else:
                 nwmove = False
         return tmp
 
@@ -128,4 +134,62 @@ class Bishop(Piece.Piece):
                 nwmove = False
             else:
                 nwmove = False
+
+    def would_see_king(self, board):
+        tmp = []
+        nemove = True
+        nesee = True
+        semove = True
+        sesee = True
+        swmove = True
+        swsee = True
+        nwmove = True
+        nwsee = True
+        for t in range(1, 8):
+            if (semove and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
+                    and board[self.x + t, self.y + t].has_piece()
+                    and board[self.x + t, self.y + t].get_piece().get_color() != self.color):
+                semove = False
+            elif (sesee and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
+                    and board[self.x + t, self.y + t].has_piece()
+                    and board[self.x + t, self.y + t].get_piece().get_color() != self.color
+                  and type(board[self.x + t, self.y + t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x + t, self.y + t))
+                sesee = False
+
+
+            if (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
+                    and board[self.x + t, self.y - t].has_piece()
+                    and board[self.x + t, self.y - t].get_piece().get_color() != self.color):
+                swmove = False
+            elif (swsee and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
+                    and board[self.x + t, self.y - t].has_piece()
+                    and board[self.x + t, self.y - t].get_piece().get_color() != self.color
+                  and type(board[self.x + t, self.y - t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x + t, self.y - t))
+                swsee = False
+
+            if (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
+                    and board[self.x - t, self.y + t].has_piece()
+                    and board[self.x - t, self.y + t].get_piece().get_color() != self.color):
+                nemove = False
+            elif (nesee and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
+                    and board[self.x - t, self.y + t].has_piece()
+                    and board[self.x - t, self.y + t].get_piece().get_color() != self.color
+                  and type(board[self.x - t, self.y + t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x - t, self.y + t))
+                nesee = False
+
+            if (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
+                    and board[self.x - t, self.y - t].has_piece()
+                    and board[self.x - t, self.y - t].get_piece().get_color() != self.color):
+                nwmove = False
+            elif (nwsee and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
+                    and board[self.x - t, self.y - t].has_piece()
+                    and board[self.x - t, self.y - t].get_piece().get_color() != self.color
+                  and type(board[self.x - t, self.y - t].get_piece()) is Pieces.King.King):
+                tmp.append((self.x - t, self.y - t))
+                nwsee = False
+        return tmp
+
 

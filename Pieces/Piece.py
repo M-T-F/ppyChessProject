@@ -16,11 +16,15 @@ class Piece(ABC):
         pass
 
     @abstractmethod
-    def can_see(self):
+    def can_see(self, board=None):
         pass
 
     @abstractmethod
     def select_move(self, board):
+        pass
+
+    @abstractmethod
+    def would_see_king(self, board):
         pass
 
     def get_icon(self):
