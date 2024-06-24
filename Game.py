@@ -83,7 +83,8 @@ class Game:
                                                 self.selected[0], self.selected[1]].get_piece().get_not_moved()):
                                         self.board.castle(self.selected, x, y)
                                         player_turn = 'black' if player_turn == 'white' else 'white'
-                                    elif type(self.board.board[self.selected[0], self.selected[1]].get_piece()) is Pawn.Pawn and x == 0 or x == 7:
+                                    elif (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
+                                          is Pawn.Pawn and (x == 0 or x == 7)):
                                         choose_buttons[0].set_piece(Queen(player_turn, x, y))
                                         choose_buttons[1].set_piece(Knight(player_turn, x, y))
                                         choose_buttons[2].set_piece(Bishop(player_turn, x, y))
