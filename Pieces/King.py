@@ -6,6 +6,10 @@ class King(Piece.Piece):
     icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_king.png'), 0.35)
     icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
 
+    def __init__(self, color, x, y, enemies):
+        super().__init__(color, x, y, enemies)
+        self.alive = True
+
     def can_move(self):
         return [(self.x+1, self.y+1), (self.x+1, self.y-1),
                 (self.x-1, self.y+1), (self.x-1, self.y-1),
@@ -45,3 +49,8 @@ class King(Piece.Piece):
 
     def get_cord(self):
         return (int(self.x), int(self.y))
+
+    def kill(self):
+        self.alive = False
+    def is_alive(self):
+        return self.alive

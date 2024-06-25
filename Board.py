@@ -58,13 +58,12 @@ class Board:
                 self.board[7, y].set_piece(self.white_king)
                 self.white_pieses.append(self.white_king)
 
-
     @property
     def board(self):
         return self._board
 
     def move(self, s, tx, ty):
-        #if type(self.board[s[0], s[1]].get_piece()) is Pawn.Pawn and tx == 0 or tx == 7:
+        # if type(self.board[s[0], s[1]].get_piece()) is Pawn.Pawn and tx == 0 or tx == 7:
         self.board[s[0], s[1]].get_piece().set_moved()
         self.board[s[0], s[1]].get_piece().move(tx, ty)
         if self.board[tx, ty].has_piece():
@@ -72,21 +71,23 @@ class Board:
                 self.white_pieses.remove(self.board[tx, ty].get_piece())
             else:
                 self.black_pieces.remove(self.board[tx, ty].get_piece())
+        if type(self.board[tx, ty].get_piece()) is King.King:
+            self.board[tx, ty].get_piece().kill()
         self.board[tx, ty].set_piece(self.board[s[0], s[1]].get_piece())
         self.board[s[0], s[1]].set_piece(None)
         self.unselect()
 
     def promote(self, s, piece):
-        self.board[piece.get_x_coordinate(), piece.get_y_coordinate()].set_piece(piece)
         if self.board[s[0], s[1]].get_piece().get_color() == 'white':
             self.white_pieses.remove(self.board[s[0], s[1]].get_piece())
             self.white_pieses.append(piece)
+            piece.set_enemies(self.black_pieces)
         else:
             self.black_pieces.remove(self.board[s[0], s[1]].get_piece())
             self.black_pieces.append(piece)
-        self.board[s[0], s[1]].set_piece(None)
-        self.unselect()
-
+            piece.set_enemies(self.white_pieces)
+        self.board[s[0], s[1]].set_piece(piece)
+        self.move(s, piece.get_x_coordinate(), piece.get_y_coordinate())
 
     def castle(self, s, tx, ty):
         self.board[s[0], s[1]].get_piece().set_moved()
@@ -107,7 +108,7 @@ class Board:
 
     def select_move(self, selected):
         self.board[selected[0], selected[1]].get_piece().select_move(self.board)
-        #can_see = self.board[selected].can_see()
+        # can_see = self.board[selected].can_see()
 
     def unselect(self):
         for x in self.board:
@@ -115,7 +116,7 @@ class Board:
                 y.set_selection(False)
 
     def can_move(self, x, y):
-        return self.board[x,y].cen_move()
+        return self.board[x, y].cen_move()
 
     def check_check(self):
         for piece in self.black_pieces:
@@ -127,3 +128,18 @@ class Board:
             if self.black_king.get_cord() in piece.can_see(self.board):
                 cord = self.black_king.get_cord()
                 self.board[cord[0], cord[1]].set_check_selection()
+
+    def play(self):
+        return self.white_king.is_alive() and self.black_king.is_alive()
+
+    def get_wining_colors(self):
+        if self.white_king.is_alive():
+            return [(0, 0, 0), (255, 255, 255)]
+        else:
+            return [(255, 255, 255), (0, 0, 0)]
+
+    def get_win_msg(self):
+        if self.white_king.is_alive():
+            return "white win"
+        else:
+            return "black win"

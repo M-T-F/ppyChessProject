@@ -5,7 +5,7 @@ class Piece(ABC):
     icon_white = None
     icon_black = None
 
-    def __init__(self, color, x, y, enemies):
+    def __init__(self, color, x, y, enemies = []):
         self.color = color
         self.not_moved = True
         self.x = x
@@ -58,5 +58,8 @@ class Piece(ABC):
 
     def __repr__(self):
         return str(type(self)) + " " + str(self.x) + " " + str(self.y) + " "+ str(self.color)
+
+    def set_enemies(self, enemies):
+        self.enemies = enemies
 
 
