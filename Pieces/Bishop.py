@@ -55,6 +55,8 @@ class Bishop(Piece.Piece):
                   and board[self.x + t, self.y + t].get_piece().get_color() != self.color):
                 tmp.append((self.x + t, self.y + t))
                 semove = False
+            else:
+                semove = False
 
             if (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
                     and not board[self.x + t, self.y - t].has_piece()):
@@ -63,6 +65,8 @@ class Bishop(Piece.Piece):
                   and board[self.x + t, self.y - t].has_piece()
                   and board[self.x + t, self.y - t].get_piece().get_color() != self.color):
                 tmp.append((self.x + t, self.y - t))
+                swmove = False
+            else:
                 swmove = False
 
             if (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
@@ -73,6 +77,8 @@ class Bishop(Piece.Piece):
                   and board[self.x - t, self.y + t].get_piece().get_color() != self.color):
                 tmp.append((self.x - t, self.y + t))
                 nemove = False
+            else:
+                nemove = False
 
             if (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
                     and not board[self.x - t, self.y - t].has_piece()):
@@ -81,59 +87,14 @@ class Bishop(Piece.Piece):
                   and board[self.x - t, self.y - t].has_piece()
                   and board[self.x - t, self.y - t].get_piece().get_color() != self.color):
                 tmp.append((self.x - t, self.y - t))
+                nwmove = False
+            else:
                 nwmove = False
         return tmp
 
-
     def select_move(self, board):
-        nemove = True
-        semove = True
-        swmove = True
-        nwmove = True
-        for t in range(1, 8):
-            if (semove and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
-                    and not board[self.x + t, self.y + t].has_piece()):
-                board[self.x + t, self.y + t].set_move_selection()
-            elif (semove and 0 <= self.x + t <= 7 and 0 <= self.y + t <= 7
-                  and board[self.x + t, self.y + t].has_piece()
-                  and board[self.x + t, self.y + t].get_piece().get_color() != self.color):
-                board[self.x + t, self.y + t].set_take_selection()
-                semove = False
-            else:
-                semove = False
-
-            if (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
-                    and not board[self.x + t, self.y - t].has_piece()):
-                board[self.x + t, self.y - t].set_move_selection()
-            elif (swmove and 0 <= self.x + t <= 7 and 0 <= self.y - t <= 7
-                  and board[self.x + t, self.y - t].has_piece()
-                  and board[self.x + t, self.y - t].get_piece().get_color() != self.color):
-                board[self.x + t, self.y - t].set_take_selection()
-                swmove = False
-            else:
-                swmove = False
-
-            if (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
-                    and not board[self.x - t, self.y + t].has_piece()):
-                board[self.x - t, self.y + t].set_move_selection()
-            elif (nemove and 0 <= self.x - t <= 7 and 0 <= self.y + t <= 7
-                  and board[self.x - t, self.y + t].has_piece()
-                  and board[self.x - t, self.y + t].get_piece().get_color() != self.color):
-                board[self.x - t, self.y + t].set_take_selection()
-                nemove = False
-            else:
-                nemove = False
-
-            if (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
-                    and not board[self.x - t, self.y - t].has_piece()):
-                board[self.x - t, self.y - t].set_move_selection()
-            elif (nwmove and 0 <= self.x - t <= 7 and 0 <= self.y - t <= 7
-                  and board[self.x - t, self.y - t].has_piece()
-                  and board[self.x - t, self.y - t].get_piece().get_color() != self.color):
-                board[self.x - t, self.y - t].set_take_selection()
-                nwmove = False
-            else:
-                nwmove = False
+        for move in self.can_see(board):
+            board[move[0], move[1]].set_move_selection()
 
     def would_see_king(self, board):
         tmp = []

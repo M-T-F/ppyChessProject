@@ -19,9 +19,8 @@ class Knight(Piece.Piece):
     def select_move(self, board):
         for tab in self.can_move():
             if 0 <= tab[0] <= 7 and 0 <= tab[1] <= 7:
-                if board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color:
-                    board[tab[0]][tab[1]].set_take_selection()
-                elif not board[tab[0]][tab[1]].has_piece():
+                if ((board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color)
+                        or not board[tab[0]][tab[1]].has_piece()):
                     board[tab[0]][tab[1]].set_move_selection()
 
     def would_see_king(self, board):

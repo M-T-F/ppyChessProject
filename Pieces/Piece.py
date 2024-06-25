@@ -5,11 +5,12 @@ class Piece(ABC):
     icon_white = None
     icon_black = None
 
-    def __init__(self, color, x, y):
+    def __init__(self, color, x, y, enemies):
         self.color = color
         self.not_moved = True
         self.x = x
         self.y = y
+        self.enemies = enemies
 
     @abstractmethod
     def can_move(self):
@@ -51,3 +52,11 @@ class Piece(ABC):
 
     def get_y_coordinate(self):
         return self.y
+
+    def __str__(self):
+        return str(self.x) + " " + str(self.y) + " "+ str(self.color)
+
+    def __repr__(self):
+        return str(type(self)) + " " + str(self.x) + " " + str(self.y) + " "+ str(self.color)
+
+

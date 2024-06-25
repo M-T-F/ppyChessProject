@@ -35,6 +35,7 @@ class Game:
                           Field.Field(50, 200)]
         while True:
             color = False
+            self.board.check_check()
             for x in range(0, 8):
                 color = color == False
                 for y in range(0, 8):

@@ -6,10 +6,6 @@ class King(Piece.Piece):
     icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_king.png'), 0.35)
     icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_king.png'), 0.4)
 
-    def __init__(self, color, x, y, enemies):
-        super().__init__(color, x, y)
-        self.enemies = enemies
-
     def can_move(self):
         return [(self.x+1, self.y+1), (self.x+1, self.y-1),
                 (self.x-1, self.y+1), (self.x-1, self.y-1),
@@ -23,9 +19,8 @@ class King(Piece.Piece):
         for tab in self.can_move():
             if 0 <= tab[0] <= 7 and 0 <= tab[1] <= 7:
                 if not self.enemies_see(tab, board):
-                    if board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color:
-                        board[tab[0]][tab[1]].set_take_selection()
-                    elif not board[tab[0]][tab[1]].has_piece():
+                    if ((board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color)
+                            or not board[tab[0]][tab[1]].has_piece()):
                         board[tab[0]][tab[1]].set_move_selection()
         if self.not_moved:
             if (board[self.x, 7].has_piece() and board[self.x, 7].get_piece().get_not_moved() and
@@ -48,3 +43,5 @@ class King(Piece.Piece):
                 return True
         return False
 
+    def get_cord(self):
+        return (int(self.x), int(self.y))
