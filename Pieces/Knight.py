@@ -17,14 +17,17 @@ class Knight(Piece.Piece):
         return self.can_move()
 
     def select_move(self, board):
-        for tab in self.can_move():
-            if 0 <= tab[0] <= 7 and 0 <= tab[1] <= 7:
-                if ((board[tab[0]][tab[1]].has_piece() and board[tab[0]][tab[1]].get_piece().get_color() != self.color)
-                        or not board[tab[0]][tab[1]].has_piece()):
-                    board[tab[0]][tab[1]].set_move_selection()
+        for move in self.can_move():
+            if 0 <= move[0] <= 7 and 0 <= move[1] <= 7:
+                if (((board[move[0]][move[1]].has_piece()
+                      and board[move[0]][move[1]].get_piece().get_color() != self.color)
+                        or not board[move[0]][move[1]].has_piece())
+                        and not self.is_pined_to_king(board, (self.x, self.y), move)):
+                    board[move[0]][move[1]].set_move_selection()
 
     def would_see_king(self, board):
         return self.can_see(board)
 
-
+    def would_see_king_after(self, board, index, move):
+        return False
 

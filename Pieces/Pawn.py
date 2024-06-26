@@ -29,28 +29,38 @@ class Pawn(Piece.Piece):
             tmp = True
             for t in range(1,3):
                 if self.color == 'black':
-                    if not board[self.x+t, self.y].has_piece() and tmp:
+                    if (not board[self.x+t, self.y].has_piece() and tmp
+                            and not self.is_pined_to_king(board, (self.x, self.y), (self.x+t, self.y))):
                         board[self.x+t, self.y].set_move_selection()
                     else:
                         tmp = False
                 else:
-                    if not board[self.x-t, self.y].has_piece() and tmp:
+                    if (not board[self.x-t, self.y].has_piece() and tmp
+                            and not self.is_pined_to_king(board, (self.x, self.y), (self.x-t, self.y))):
                         board[self.x-t, self.y].set_move_selection()
                     else:
                         tmp = False
         else:
             if self.color == 'black':
-                if not board[self.x+1, self.y].has_piece():
+                if (not board[self.x+1, self.y].has_piece()
+                        and not self.is_pined_to_king(board, (self.x, self.y), (self.x+1, self.y))):
                     board[self.x + 1, self.y].set_move_selection()
             else:
-                if not board[self.x - 1, self.y].has_piece():
+                if (not board[self.x - 1, self.y].has_piece()
+                        and not self.is_pined_to_king(board, (self.x, self.y), (self.x-1, self.y))):
                     board[self.x - 1, self.y].set_move_selection()
         for see in self.can_see():
             if 0 <= see[1] <= 7:
-                if board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color:
+                if (board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color
+                        and not self.is_pined_to_king(board, (self.x, self.y), see)):
                     board[see[0], see[1]].set_move_selection()
 
     def would_see_king(self, board):
         return self.can_see(board)
+
+    def would_see_king_after(self, board, index, move):
+        return False
+
+
 
 

@@ -1,5 +1,3 @@
-import turtle
-
 import pygame as pg
 import sys
 
@@ -26,7 +24,6 @@ class Game:
         screen = pg.display.set_mode((600, 600))
         screen.fill((150, 150, 150))
         pg.display.set_caption("Chess")
-        ##pg.draw.rect(screen_white, (10, 10, 10), Field(100, 100))
         player_turn = "white"
         choose_upgrade = False
         choose_buttons = [Field.Field(50, 50),

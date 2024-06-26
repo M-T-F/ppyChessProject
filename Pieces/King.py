@@ -54,3 +54,7 @@ class King(Piece.Piece):
         self.alive = False
     def is_alive(self):
         return self.alive
+
+    def would_see_king_after(self, board, index, move):
+        return False
+

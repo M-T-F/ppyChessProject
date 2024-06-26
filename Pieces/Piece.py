@@ -28,6 +28,17 @@ class Piece(ABC):
     def would_see_king(self, board):
         pass
 
+    @abstractmethod
+    def would_see_king_after(self, board, index, move):
+        pass
+
+    def is_pined_to_king(self, board, index, move):
+        for enemy in self.enemies:
+            if index in enemy.can_see(board):
+                if enemy.would_see_king_after(board, index, move):
+                    return True
+        return False
+
     def get_icon(self):
         if self.color == 'white':
             return self.icon_white
