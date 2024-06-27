@@ -4,6 +4,12 @@ from abc import ABC, abstractmethod
 class Piece(ABC):
 
     def __init__(self, color, x, y, enemies= None):
+        """ konstruktor
+            color - kolor figury (black/white)
+            x - wspułżendna x
+            y - wspułżendna y
+            enemies - lista wrogicg figur
+         """
         if enemies is None:
             enemies = [[]]
         self.color = color
