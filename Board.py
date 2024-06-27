@@ -6,7 +6,6 @@ from Field import Field
 class Board:
     def __init__(self):
         self._board = np.array([[Field(x, y) for x in range(100, 500, 50)] for y in range(100, 500, 50)])
-        self.selected = None
         self.white_pieces = []
         self.black_pieces = []
         for y in range(8):

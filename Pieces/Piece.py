@@ -2,8 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class Piece(ABC):
+    icon_white = None
+    icon_black = None
 
-    def __init__(self, color, x, y, enemies= None):
+    def __init__(self, color, x, y, enemies = None):
         """ konstruktor
             color - kolor figury (black/white)
             x - wspułżendna x

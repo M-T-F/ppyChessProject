@@ -16,8 +16,6 @@ class Game:
     def __init__(self):
         self.board = Board()
         self.selected = None
-        self.cmove = []
-        self.csee = []
 
     def run_game(self):
         """ metoda uruchamiająca gre """
