@@ -20,6 +20,7 @@ class Game:
         self.csee = []
 
     def run_game(self):
+        """ metoda uruchamiająca gre """
         pg.init()
         screen = pg.display.set_mode((600, 600))
         screen.fill((150, 150, 150))
@@ -70,38 +71,46 @@ class Game:
                 if event.type == pg.QUIT:
                     sys.exit()
                 elif event.type == pg.MOUSEBUTTONDOWN and self.board.play():
+                    not_clicked = True
                     if choose_upgrade:
                         for button in choose_buttons:
                             if button.get_rect().collidepoint(pg.mouse.get_pos()):
+                                not_clicked = False
                                 self.board.promote(self.selected, button.get_piece())
                                 choose_upgrade = False
                                 player_turn = 'black' if player_turn == 'white' else 'white'
                                 for button_clear in choose_buttons:
                                     button_clear.set_piece(None)
-                    for x in range(0, 8):
-                        for y in range(0, 8):
-                            if self.board.board[x, y].get_rect().collidepoint(pg.mouse.get_pos()):
-                                if self.board.can_move(x, y):
-                                    if (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
-                                            is King.King
-                                            and self.board.board[
-                                                self.selected[0], self.selected[1]].get_piece().get_not_moved()):
-                                        self.board.castle(self.selected, x, y)
-                                        player_turn = 'black' if player_turn == 'white' else 'white'
-                                    elif (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
-                                            is Pawn.Pawn and (x == 0 or x == 7)):
-                                        choose_buttons[0].set_piece(Queen(player_turn, x, y))
-                                        choose_buttons[1].set_piece(Knight(player_turn, x, y))
-                                        choose_buttons[2].set_piece(Bishop(player_turn, x, y))
-                                        choose_buttons[3].set_piece(Rook(player_turn, x, y))
-                                        choose_upgrade = True
-                                    else:
-                                        self.board.move(self.selected, x, y)
-                                        player_turn = 'black' if player_turn == 'white' else 'white'
-                                elif not choose_upgrade and self.board.board[x, y].has_piece():
-                                    if self.board.board[x, y].get_piece().get_color() == player_turn:
-                                        self.board.unselect()
-                                        self.board.board[x, y].set_selection(True)
-                                        self.selected = (x, y)
-                                        self.board.select_move(self.selected)
+                    else:
+                        for x in range(0, 8):
+                            for y in range(0, 8):
+                                if self.board.board[x, y].get_rect().collidepoint(pg.mouse.get_pos()):
+                                    if self.board.can_move(x, y):
+                                        not_clicked = False
+                                        if (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
+                                                is King.King
+                                                and self.board.board[
+                                                    self.selected[0], self.selected[1]].get_piece().get_not_moved()):
+                                            self.board.castle(self.selected, x, y)
+                                            player_turn = 'black' if player_turn == 'white' else 'white'
+                                        elif (type(self.board.board[self.selected[0], self.selected[1]].get_piece())
+                                                is Pawn.Pawn and (x == 0 or x == 7)):
+                                            choose_buttons[0].set_piece(Queen(player_turn, x, y))
+                                            choose_buttons[1].set_piece(Knight(player_turn, x, y))
+                                            choose_buttons[2].set_piece(Bishop(player_turn, x, y))
+                                            choose_buttons[3].set_piece(Rook(player_turn, x, y))
+                                            choose_upgrade = True
+                                        else:
+                                            self.board.move(self.selected, x, y)
+                                            player_turn = 'black' if player_turn == 'white' else 'white'
+                                    elif not choose_upgrade and self.board.board[x, y].has_piece():
+                                        if self.board.board[x, y].get_piece().get_color() == player_turn:
+                                            not_clicked = False
+                                            self.board.unselect()
+                                            self.board.board[x, y].set_selection(True)
+                                            self.selected = (x, y)
+                                            self.board.select_move(self.selected)
+                    if not_clicked:
+                        self.board.unselect()
+                        self.selected = None
             pg.display.flip()

@@ -8,45 +8,41 @@ class Field:
         self.selection = False
         self.move_selection = False
         self.check_selection = False
-        self.castle_selection = False
-        #print(self.rect.x, self.rect.y, self.rect.centery)
 
     def has_piece(self):
+        """ metoda zwracająca True jeśli na polu stoi figura"""
         return self.piece is not None
 
     def set_piece(self, piece):
+        """ metoda kładąca figure na pole"""
         self.piece = piece
 
     def get_piece(self):
+        """ getter figury stojącej na polu"""
         return self.piece
 
     def get_rect(self):
+        """ Getter self.rect (kwadratu reprezentjący pole)"""
         return self.rect
 
     def set_selection(self, selection):
+        """ metoda zaznaczająca pole"""
         self.selection = selection
         if not self.selection:
             self.move_selection = False
-            self.castle_selection = False
             self.check_selection = False
 
-    def is_selected(self):
-        return self.selection
-
     def set_move_selection(self):
+        """ metoda ustawiająca zaznaczenie na pole """
         self.move_selection = True
 
     def get_move_selection(self):
+        """ metoda ustawiająca zaznaczenie na pole do ruchu"""
         return self.move_selection
 
     def set_check_selection(self):
+        """ metoda ustawiająca zaznaczenie na pole z odsłoniętym królem"""
         self.check_selection = True
-
-    def set_castle_selection(self):
-        self.castle_selection = True
-
-    def cen_move(self):
-        return self.move_selection or self.castle_selection
 
     white_color = (255, 253, 208)
 
@@ -59,9 +55,10 @@ class Field:
     check_selection_color = (255, 50, 50)
 
     def get_color(self, token):
+        """ metoda zwraca kolor pola zalerznie od tokenu, tego czy jest zaznaczone i rodzaju zaznaczenia"""
         if self.check_selection:
             return self.check_selection_color
-        if self.selection or self.move_selection or self.castle_selection:
+        if self.selection or self.move_selection:
             if token:
                 return self.white_selected_color
             else:
@@ -71,9 +68,4 @@ class Field:
                 return self.white_color
             else:
                 return self.black_color
-
-    #def blit(self, screen):
-     #   screen.blit(self.piece.get_icon(), self.rect)
-
-
 

@@ -6,18 +6,6 @@ class Pawn(Piece.Piece):
     icon_white = pg.transform.scale_by(pg.image.load(r'Pieces\icons\white_pawn.png'), 0.35)
     icon_black = pg.transform.scale_by(pg.image.load(r'Pieces\icons\black_pawn.png'), 0.4)
 
-    def can_move(self):
-        if self.not_moved:
-            if self.color == 'black':
-                return [(self.x+1, self.y), (self.x+2, self.y)]
-            else:
-                return [(self.x-1, self.y), (self.x-2, self.y)]
-        else:
-            if self.color == 'black':
-                return [(self.x+1, self.y)]
-            else:
-                return [(self.x-1, self.y)]
-
     def can_see(self, board=None):
         if self.color == 'black':
             return [(self.x+1, self.y+1), (self.x+1, self.y-1)]
@@ -54,9 +42,6 @@ class Pawn(Piece.Piece):
                 if (board[see[0], see[1]].has_piece() and board[see[0], see[1]].get_piece().get_color() != self.color
                         and not self.is_pined_to_king(board, (self.x, self.y), see)):
                     board[see[0], see[1]].set_move_selection()
-
-    def would_see_king(self, board):
-        return self.can_see(board)
 
     def would_see_king_after(self, board, index, move):
         return False
